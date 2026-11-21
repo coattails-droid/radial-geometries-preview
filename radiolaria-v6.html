@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sporatic Geometries — Radiolaria generator, study 079 — background fades in and out with the pass (audition)</title>
+<style>
+  html,body{margin:0;padding:0;background:#0d0708}
+  canvas{display:block;width:100vw;height:100vw;max-width:720px;max-height:720px}
+</style>
+</head>
+<body>
+<canvas id="c" width="720" height="720"></canvas>
+<script>
+/* SPORATIC GEOMETRIES — RESTART, ONE LAYER (Calvin, 2026-11-18):
+   "Lets start again with just one layer, the radiolaria generator."
+   Only the Radiolaria generator, alone on the dark field, centred.
+   Each 24s pass deals a new radiolaria from its own continuing stream
+   (layer:radiolaria — never reseeded). Colour: its band of the spectrum
+   (offset 0.38), sliding slowly, jumping at each retrigger.
+   Calvin delta on 001: CONNECT ALL POINTS with added line work — every
+   spoke tip is now joined to its neighbours, closing an irregular
+   polygon web around the skeleton.
+   Calvin delta on 002: CROSS-CHORDS TOO — every tip connected to every
+   other tip (complete graph), drawn faint and thin behind the skeleton
+   so the web reads as a woven field. Open with #grid for a 2x2 sheet.
+   Calvin delta on 003: bring the chords UP, tiered by length within each
+   deal — shortest third at FULL opacity, mid third at 2/3, longest third
+   at 1/3. Same stream seed as 003, so the deals match for comparison.
+   Calvin delta on 004: confirmed the loop trigger was 7 seconds and
+   moved it to 12 SECONDS — the retrigger (and the hue jump) now lands
+   every 12s. Nothing else changed.
+   Calvin delta on 005: the radiolaria no longer pops in static — it
+   GROWS out from the centre for the first 6 seconds of the pass, peaks
+   at full size at the midpoint, then SHRINKS back to nothing over the
+   second 6 seconds, vanishing exactly at the retrigger.
+   Calvin delta on 006: the frame looked too small on his phone. The
+   canvas was already 720x720 — the phone was shrinking it (no viewport
+   tag, so the browser laid the page out ~980px wide and zoomed out).
+   Now: viewport tag + the canvas fills the phone's full width, still
+   720-native, capped at 720px on larger screens.
+   Calvin delta on 008: WITHOUT THE SPOKES AND CIRCLES — the radiating
+   spokes, the concentric rings and the centre hub are not drawn; only
+   the points and their line work remain (neighbour web + tiered
+   cross-chords + tip dots). Same deals, same 19s grow/rest/shrink.
+   Calvin delta on 009: full length extended to 24 SECONDS — grow-up
+   3.5s, hold 17s, shrink back 3.5s.
+   Calvin delta on 010: the linework and dots as BRIGHT as possible
+   while keeping the opacity levels — ink lightness 64% -> 80%, the
+   brightest the hue holds before it washes toward white. Every alpha
+   untouched: chords full / 2/3 / 1/3 by length, neighbour web 0.55,
+   dots 0.95.
+   Calvin delta on 011: the dot points WOBBLE/SWAY independently, as on
+   the Hash-Seed Harmonic Synthesizer — each point is dealt its own sway
+   (amplitude 2.5–6.5px, own rate 0.5–1.2 rad/s, own phase) and rides a
+   small circle around its dealt position; the web and chords follow
+   the points, so the whole net breathes during the hold.
+   Calvin delta on 012: make the wandering MORE DRAMATIC and THROUGHOUT
+   THE FULL LENGTH — each point now also rides a broad dealt ellipse
+   (12-26px by 8-20px) that completes exactly one circuit across the
+   whole 24s pass, layered over a faster, larger wobble (4-8px). The
+   wandering never stops: grow, hold and shrink alike.
+   Calvin delta on 013: ALL DOTS CONNECT WITH LINEWORK — the dot-to-dot
+   chain that strings every point in order and closes is brought to
+   full strength (opacity 1.0, 1.6px), so every dot visibly sits on one
+   continuous line, on top of the tiered all-to-all chords beneath it.
+   Calvin delta on 014: lines POP in and out as the dots wander — the
+   chord tiers were being re-ranked from the LIVE lengths every frame,
+   so a line crossing a third-boundary jumped tier mid-pass. Fix: each
+   line's tier is ranked ONCE from the dealt home positions and kept
+   for the whole pass; the endpoints wander, the opacities never move.
+   POST-v1 STUDY (the locked v1 snapshot is untouched): Calvin brings
+   back the PARTICLE SWARM, kept OUTSIDE the linework — a dealt halo of
+   dust in the annulus beyond the web's furthest point, on its own
+   stream (layer:particleswarm) and its own spectrum band (0.08). The
+   swarm rides the same envelope as the web: grows out over 3.5s, holds
+   (swarming in place) for 17s, shrinks back to nothing over 3.5s.
+   Calvin delta on 016: bring back the LENIA FIELD, confined WITHIN
+   the linework — its growth mask is the dealt polygon and the drawing
+   is clipped to the live wandering polygon, so the flesh lives inside
+   the web and nowhere else. Own stream (layer:lenia), own band (0.72,
+   violet). Seeded fresh each pass (heart + scattered blobs), it rides
+   the same envelope as everything else.
+   Calvin delta on 017: the flesh still reads PIXELATED, and he asked
+   what levers Lenia has. This study pulls the finish levers: grid
+   110 -> 160 (finer cells), kernel 10 -> 15 (same physical form
+   size), seed blobs scaled to match, and a 2px softening pass on the
+   flesh draw so the cell edges melt. Appetite, speed, band untouched.
+   Calvin delta on 018 — he set the Lenia levers himself: presence
+   GHOST (alpha ceiling 0.59 -> 0.30), speed INCREASED (2 steps per
+   frame, dt 0.12), seeding INCREASED (heart + 26 blobs, wider claim),
+   pickiness NARROWER (sigma 0.058 -> 0.040), appetite HIGHER
+   (mu 0.28 -> 0.32), kernels SMALL (radius 15 -> 9 cells).
+   Calvin delta on 019: bring back the SMOOTHLIFE wash — a soft
+   shimmering stratum UNDER the Lenia, confined within the linework
+   the same way (polygon growth mask + live clip), on its own stream
+   (layer:smoothlife) and band (0.84, rose), with the slow brightness
+   pulse from the organism samples. Seeded fresh each pass.
+   Calvin delta on 020: bring back THE SHIMMER — in 020 the wash
+   returned too dim for its pulse to read. Restored to its Sample 006
+   character: full-strength stratum (alpha ceiling ~0.73), a wide slow
+   pulse (0.70 +/- 0.30, ~3s period), stepped every frame so its
+   surface crawls while it breathes.
+   QA catch before delivery: the wash's first rule (additive update,
+   disc seeding) starved to zero within ~140 steps — the shimmer
+   would have died seconds into every pass, and the grid sheets were
+   silently identical because of it. Fixed and verified headless:
+   blend update (each cell moves 35% toward its target per step) +
+   patchy noise seeding; the field sustains indefinitely (600-step
+   test: stable, thousands of active cells).
+   Calvin delta on 021: the SmoothLife shimmer should LOCK TO THE
+   SAME COLOUR as the Lenia and share its GHOSTLY PRESENCE — wash hue
+   offset +0.46 (band 0.84, rose) -> +0.34 (band 0.72, the flesh's own
+   violet), and its alpha ceiling 185 -> 77 (0.30, the flesh's ghost
+   ceiling); the pulse now breathes UNDER that ceiling, peaking
+   exactly at the flesh's strength and never past it.
+   Calvin delta on 022: TAKE IT VOLUMETRIC. The organism leaves the
+   disc: points are dealt onto a spherical shell (same deals, plus a
+   dealt polar angle), the linework is tiered by dealt 3D distance
+   (ranked once, as in 2D), the flesh becomes a volumetric sprite
+   cloud sampled from the living fields and extruded through the
+   ball, and the swarm moves out onto a shell in space. The whole
+   volume turns half a revolution per pass (as the synth's sphere),
+   tilted, with depth cueing throughout. First step toward SPINAL.
+   Calvin delta on 023: ENLARGE THE SPRITE CLOUD so it SPANS THE FULL
+   FRAME at the rest point (the peak hold). The cloud is no longer
+   sized to the web ball: the fields' footprint is normalised to the
+   dealt rim and remapped onto a frame-filling radius (0.98 x the
+   half-frame), so at full size the cloud touches the frame edges
+   whatever the deal, and the net sits inside it.
+   Calvin delta on 024: THE SHIMMER TAKES A FEW ROUNDS TO START
+   WORKING. Measured: a fresh wash starts as scattered noise at ~53%
+   of its working mass and needs ~100 steps to coalesce into the
+   broad shimmer (coverage at strength 30% -> 52% by step 100, then
+   a stable plateau). Fix: the wash is PRE-ROLLED 120 steps inside
+   seedSmooth, so every pass — the first one included — starts with
+   the shimmer already working.
+   Calvin delta on 025: BRING ALL OF THE LINEWORK UP TO FULL OPACITY.
+   The length tiers (shortest 1.0 / mid 2/3 / longest 1/3, his Study
+   004 system) are superseded: every cross-chord now draws at 1.0,
+   and the depth-cue dimming no longer applies to lines — chords and
+   chain alike are at full opacity everywhere. Dots keep their depth
+   cue; widths unchanged.
+   Calvin delta on 026: HAVE THE RADIOLARIA GROW TO A BIT LARGER
+   SIZE, KEEPING IT IN FRAME. The dealt 3D base positions scale up
+   x1.22 at deal time, clamped so the web's radius never exceeds a
+   frame-safe cap (335 live / 171 per grid cell — silhouette ~345 /
+   ~176 against half-frames of 360 / 180). Deals keep their size
+   variety below the cap; the swarm shell and depth cue follow the
+   enlarged radius automatically.
+   Calvin delta on 027: COLOUR GRADIENT SHIFTS THROUGHOUT THE SPRITE
+   CLOUD. The cloud is no longer one flat hue: each sprite's hue is
+   dealt from its place in the volume — the gradient runs through
+   the ball's depth (+/-0.18 of the spectrum, front to back) with a
+   further +0.08 toward the rim, centred on the flesh band (the 022
+   lock holds at the gradient's middle). The gradient is a property
+   of the volume — it turns with the ball — and the whole sweep
+   keeps sliding with the hue phase, as the palette always has.
+   Calvin delta on 028: SOME LINES SEEM MORE BOLD THAN OTHERS — BRING
+   THEM ALL UP TO MATCH. The difference was width, not opacity: the
+   dot-to-dot chain draws at 1.6px while the cross-chords drew at
+   0.7px. The chords now draw at 1.6px too — every line in the web
+   is the same weight at the same full opacity.
+   Calvin delta on 029: TRANSPARENT COLOURED FACES ON THE SHAPE SIDES.
+   Yes — the dealt points' convex hull is computed at deal time
+   (brute force over triples, <=21 points): its triangles are the
+   shape's sides. Each face fills at low alpha in the web's hue,
+   shifted by the face's own depth in the ball (the cloud gradient's
+   language), dimmed a touch at the back by the depth cue, drawn
+   far-to-near over the cloud and under the lines — front and back
+   faces both show, so the volume reads as stained glass.
+   Calvin delta on 030: PANES A LITTLE STRONGER AND GLASSY IF
+   POSSIBLE, COLOUR COMPLEMENTARY TO THE LINES. Face hue is now the
+   complement of the line hue (+0.5 of the wheel, the depth shift
+   kept). Glass: each pane's view-space normal is measured per
+   frame — panes facing the viewer catch the light (stronger,
+   lighter, less saturated: the sheen), edge-on panes go faint.
+   Base alpha 0.15 -> 0.26 before the facing/depth shaping.
+   Calvin delta on 031: TRAP THE SPRITE CLOUD INSIDE THE LINES AND
+   PANES. The hull's outward face planes are stored at deal time;
+   every sprite is tested against all of them in object space and
+   only drawn if it lies inside every plane — the cloud now fills
+   the crystal and takes its faceted shape, nothing spilling past
+   the panes. (The swarm stays outside, as dealt.)
+   Calvin delta on 032: MAKE THE SPRITE CLOUD MORE OPALESCENT. The
+   cloud's body goes milky and pearly (saturation down to 74%,
+   lightness up to the high 80s/90s at its hot core), and thin-film
+   colour bands run through its depth: they crawl as the hue phase
+   slides and ripple as the volume turns — opal's play-of-colour —
+   over a fine per-cell patchwork jitter, the harlequin flash. The
+   material gradient stays underneath it all.
+   Calvin delta on 033: LIMIT THE NUMBER OF POINTS — SOME SHAPES ARE
+   TOO COMPLEX FOR THE LOOK. The deal was 9-21 points (up to 210
+   cross-chords and a thicket of panes); the count now deals 9-14
+   (at most 91 chords). The cap is the single number in rr(9, 15) —
+   one word retunes it.
+   Calvin delta on 034: THE SPRITE CLOUD FINDS ITS WAY OUT OF THE
+   SHAPE ON THE EDGES FROM TIME TO TIME. Found it: the trap tested
+   sprites against the DEALT hull, but the panes are drawn through
+   the WANDERING points — whenever a vertex wandered inward, its
+   pane cut inside the tested hull and the cloud leaked past the
+   visible edge. Fix: the cage is rebuilt every frame from the live
+   wandering points (same face topology), so the trap and the panes
+   are the same surface at every moment.
+   RADIOLARIA v2 LOCKED from study 035 (see sporatic-radiolaria-
+   V2-LOCK.md). Everything below is post-v2.
+   Calvin deltas on v2: PANES A LITTLE MORE CLEAR (base alpha
+   0.26 -> 0.17); DEEPEN THE COLOUR OF THE LINEWORK; APPLY THE
+   COLOUR PALETTE FROM THE HASH-SEED HARMONIC SYNTHESIZER AND VARY
+   THE COLOURS OF THE DOTS; HAVE THE LINEWORK SHIFT COLOURS
+   DYNAMICALLY BETWEEN POINTS. The palette is Tidal's six neon dot
+   colours, exactly as the synth carries them: #b6ff00, #00ff66,
+   #00f0ff, #2e6bff, #8b2bff, #ff2bd6. Each point is dealt one, then
+   slowly cycles through the palette (crossfading, desynchronised
+   per point); dots draw in their point's current colour, and every
+   line is a gradient between its two points' colours — so the
+   linework shifts colour between points and over time. The
+   palette's native grade (~50% lightness against the old ink's
+   80%) is the deepening.
+   Calvin delta on 036: THE SPARKLE IS CAUSING A FLICKERING — FIX IT
+   TO BE SLOWER AND SMOOTHER. Four temporal fixes, no look changes:
+   (1) each sprite's drawn intensity now eases toward the fields'
+   value (a per-cell smoother, ~8-frame memory) instead of snapping
+   to it every step, so cells fade in and out rather than popping;
+   (2) the shimmer pulse slows from a ~3s breath to ~7s and softens
+   (0.78 +- 0.22); (3) the dust swarm's orbital jitter slows from
+   0.8-2.0 to 0.25-0.6 rad/s — a drift, not a sparkle; (4) the opal
+   film bands crawl at half speed. The fields themselves run at
+   their set pace underneath; only what is drawn is smoothed.
+   Calvin delta on 037: CLOUD STILL HAS A FLICKER WHEN THE SPARKLE
+   HITS. Three deepenings of the same fix: (1) the intensity memory
+   lengthens (0.12 -> 0.055 per frame, ~18 frames) so brightness
+   rides over the fields' fastest churn; (2) the opal film bands —
+   the sparkle itself — broaden and gentler (amplitude 0.22 -> 0.15,
+   spatial frequency 2.6 -> 1.8), so a band's arrival is a slow wash
+   across the cloud, not a flicker front; (3) sprites now dissolve
+   at the panes (alpha fades over their last 12px inside the cage)
+   instead of popping out of existence when the wandering cage
+   passes them.
+   Calvin delta on 038: THE DOT COLOURS SHOULD SHIFT AROUND
+   THROUGHOUT THE HOLD PHASE AND FADE IN THROUGH EACH COLOUR. The
+   palette cycling is now driven by a colour clock that runs ONLY
+   during the hold (frozen through grow and shrink, reset each
+   deal), at 0.35 palette steps a second — so across the 17s hold
+   each point fades through the whole six-colour wheel, each from
+   its own dealt starting colour, desynchronised. The lines follow
+   the dots, being gradients of their colours.
+   Calvin delta on 039: SEE IT WITH THE SHIMMER REMOVED FROM THE
+   SPRITE CLOUD — he can't tell if the flicker is the shimmer or
+   the growth itself. Diagnostic audition: the SmoothLife term is
+   cut from the sprites' intensity, so the cloud is the Lenia
+   growth alone (its weight lifted 0.85 -> 1.0 to hold the cloud's
+   body). Everything else — smoothing, colour travel, cage — is
+   exactly 039, so the comparison isolates the one ingredient.
+   Calvin verdict on 040: STILL FLICKERS, PARTICULARLY WHEN DENSE —
+   so the shimmer is exonerated; the growth itself is the source.
+   Study 041 (built on 040, shimmer still out) attacks the growth
+   side two ways: (1) the Lenia is stepped every other frame — half
+   the churn that was aliasing into flicker where the cloud is
+   dense; (2) the opal film bands are anchored to the volume's own
+   depth instead of the view depth, so turning no longer churns
+   every sprite's hue — the bands still crawl with the hue phase.
+   ALSO, Calvin's ask in the same breath: THE PARTICLE SWARM BITS
+   NOW TWINKLE — each particle dealt its own slow fade (6-14s,
+   smoothstepped sine, full fade out and in), desynchronised, so
+   the dust winks randomly.
+   Calvin on 041: MUCH BETTER, BUT ONE FLICKER REMAINS. Measured
+   suspect: the Lenia seed itself. The heart + blobs seed writes
+   roughly twice the life the growth rule can sustain — field sum
+   ~2,500-2,700 with ~5,100-6,300 active cells — and it crashes by
+   half within the first 10 steps (the single biggest change of
+   the field's whole life, once per pass), before settling into
+   its living range (~2,000-2,500 sum) around step 80-120. One
+   violent event per pass, at its start. Fix, same as the
+   shimmer's in 025: PRE-ROLL — seedLenia now runs 60 steps before
+   the pass is ever drawn, so the crash and the first
+   reorganisation happen offstage and the flesh opens already
+   living.
+   Calvin on 042: (A) THE GROW PHASE IS MISSING ITS FIRST BIT — THE
+   SHAPE POPS ONTO SCREEN FROM ABOUT HALF SIZE. Found it, and it is
+   the pre-rolls' cost: the pass clock was stamped BEFORE the heavy
+   seeding (60 Lenia + 120 SmoothLife steps plus the hull), so the
+   first second-plus of every grow was spent computing and the
+   shape arrived at whatever size the clock had reached. The clock
+   is now stamped AFTER the seeding work — the grow runs its full
+   3.5s from zero. (B) STILL A FLICKER, ~9 LOOPS IN, MID-PASS. The
+   two remaining mechanisms that can pop mid-pass are removed:
+   sprite brightness is now RATE-LIMITED (it can never change
+   faster than 0.015 a frame, whatever the field does — a pattern
+   collapse becomes a slow fade), and the panes and lines draw in
+   a fixed order instead of being re-sorted by depth every frame
+   (each re-sort swap was a small pop at an overlap).
+   Calvin delta on 043: DROP THE GROW UP / SHRINK DOWN — JUST HAVE
+   THE DOTS SHIFT INTO NEW POSITION AT EACH TRIGGER. Study 044
+   rebuilds the pass around that: the shape never scales. At each
+   trigger the points glide from the old deal's positions to the
+   new one's over 3.5s (smoothstep), the web re-knitting as they
+   travel; points the new deal adds are born at its centre and
+   travel out, points it drops glide into the centre and fade.
+   Colours crossfade across the shift; the cloud's brightness
+   memory is kept across deals so the glow crossfades too, and the
+   hull, panes and cage are rebuilt from the live points every
+   frame, so the whole volume morphs as one body.
+   Calvin on 053: I THINK I SAW A REMNANT OF THE PARTICLE SWARM.
+   He was right about the file: the study-050 removal cut the old
+   dealSwarm but left drawSwarm's body standing in the file,
+   orphaned with its inkS helper and the particleswarm stream —
+   dead code with no call sites (it could not draw), but a
+   remnant all the same. Swept properly here: drawSwarm, inkS,
+   and the swarm stream are gone; the only swarm mentions left
+   are in this header's history.
+   Calvin delta on 054: DROPPED POINTS SIMPLY FADE WHERE THEY
+   STAND. The ghosts no longer glide to the centre — each stays
+   at its own place in the formation, wandering as it always did,
+   and fades out across the shift.
+   Post-v3 study 056. Calvin: MAKE THE RADIOLARIA DOTS LARGER AND
+   ADD AN INK COLOURED DOT TO THE CENTRES. Dot radius factor
+   0.8 -> 1.3 (about 1.6x), and each dot now carries a core at
+   42% of its radius in the engine's Ink (the spectrum ink at 80%
+   lightness). Ghosts get the same treatment as they fade.
+   Post-v3 study 057. Calvin: DOUBLE THE LIVING CLOUD DENSITY
+   AGAIN. Each living cell now draws FOUR sprites (two in 053,
+   one before that) — three companions jittered within the cell,
+   each with its own depth.
+   Post-v3 study 058. Calvin: MAKE THE DOTS LARGER AND THE LINES
+   THICKER. Dot radius factor 1.3 -> 2.0; line weight 1.6px ->
+   2.4px (chords and chain alike).
+   Post-v3 study 059. Calvin: EXTEND THE LOOP BY 4 SECONDS, to
+   give the gradients more time to run their course. PASS_MS
+   16000 -> 20000 (shift still 3.5s; settled 12.5s -> 16.5s).
+   The colour rate eases 0.48 -> 0.364 steps/s so the wheel
+   still completes exactly once per loop — the same full course,
+   run slower. Rotation follows the loop as always.
+   Study 060. Calvin: IT LOADS A BIT HEAVY — CLEAN UP ANY CODE
+   OR REDUCE THE WEIGHT ON CPU. A performance pass that changes
+   NO output: (1) the projection's tilt/rotation trig is computed
+   once per frame instead of once per sprite; (2) the cloud's
+   per-cell hash values are precomputed once into tables instead
+   of a Math.sin per sprite per frame; (3) both fields' inner
+   loops skip bounds checks for interior cells (same sums, same
+   order); (4) the cage test gains an inscribed fast path —
+   sprites well inside skip the plane loop entirely; (5) the
+   old 2D blit renderers (renderLenia/renderSmooth + their
+   canvases), dead since the volumetric turn, are removed.
+   Study 061. Calvin: CAN THE SPRITE CLOUD GO THROUGH A COLOR
+   GRADIENT PER LOOP AS WELL? Yes — the cloud's hue is now
+   carried by the same colour clock as the dots and lines: from
+   its violet band it travels the full spectrum across the
+   settled stretch and lands back on its band as the loop ends,
+   exactly one cycle per loop, freezing during the shift just
+   as the line colours do. (The slow huePhase drift no longer
+   drives the cloud's base; the film bands still crawl with it.)
+   Study 062. Calvin: PUT A SMALLER DARK GREY DOT ONTO EACH
+   POINT DOT AT 80% OPACITY. Each point dot gains a dark grey
+   pupil (rgb 46,46,46) at 24% of its radius, centred on top of
+   the Ink core — bead, pale ring, dark pupil. Ghosts carry the
+   pupil too, fading with them.
+   Study 063. Calvin: REPLACE THE PALE RING WITH THE DARK GREY
+   CIRCLE. The Ink core is gone; in its place the dark grey
+   circle sits at the ring's own size (42% of the dot), still at
+   80% opacity — bead and dark centre, two layers. Ghosts match.
+   Study 064. Calvin: REDUCE THE SIZE OF THE BEADS SLIGHTLY.
+   Dot radius factor 2.0 -> 1.7 (the grey centre scales with
+   its bead, as always).
+   Study 065. Calvin: CAN I SEE IT WITH THE SPOKES PUT BACK,
+   WITH THE LINEWORK PARAMETERS. The spokes return: from the
+   organism's projected centre to every point, drawn in the
+   linework's own terms — each spoke in its point's current
+   palette colour, 2.4px, full strength — laid under the chords
+   so the web still crosses over them.
+   Study 066. Calvin locked 065 as v4, then: LETS PLAY WITH THE
+   GENERATION PARAMETERS — the dot count maxes and mins out.
+   He is right: the count is dealt rr(9, 15) = 9-14 points
+   (study 034 set that cap, down from 9-21). This study makes
+   the range two variables (CNT_LO / CNT_HI, defaulting to the
+   locked 9 / 15) and adds a #counts sheet: four deals at four
+   ranges — 5-8, 9-14 (current), 15-21, 22-30 — so the count's
+   effect can be seen side by side. Live mode is unchanged.
+   Study 067. Calvin: LETS DO 9 TO 19, AND MAKE THE BEAD SIZE
+   UNIFORM AND CONSISTENT ACROSS LOOPS. The count range widens
+   to 9-19. The beads lose their dealt sizes (tip rr(2.0, 4.6)
+   made every bead — and every loop — a different size): one
+   fixed radius BEAD_R = 5.6, the old average, varied only by
+   perspective. The grey centres scale with their beads.
+   Study 069. Calvin picked the BACKDROP LATTICE from the
+   background menu: a huge, dim triangular lattice — the room
+   behind the organism — dealt from its own stream off the same
+   seed (spacing and rotation offset are dealt), drawn behind
+   everything in warm ink, turning with the organism at 0.16x
+   its speed. Built once as two paths (inner brighter, outer
+   fainter, dots at the crossings), so a frame costs two strokes
+   and a fill. Separate from the structure, related by seed,
+   geometry and motion.
+   Study 070. Calvin: BRIGHTER AND MORE COMPLEX PATTERNING.
+   The lattice weave tightens (spacing 80-102 -> 52-68), the
+   ink roughly doubles (lines 0.13/0.07, dots 0.18), and an
+   intersecting CIRCLE layer joins the triangle grid — a
+   circle on every lattice point at radius spacing/2, passing
+   through its neighbours' centres: the circle-lattice over
+   the triangle grid, in warm ink behind the organism.
+   Study 071. Calvin: STRETCH THE LATTICE VERTICALLY AND
+   REMOVE THE ROTATION. The room now stands still — only its
+   dealt offset angle remains — and the whole lattice (grid,
+   circles, dots) is scaled 1.35x in Y: taller triangles,
+   oval circles, a room that reaches up.
+   Study 072. Calvin: LEVEL THE BACKGROUND, THEN STRETCH
+   VERTICALLY STEEPLY. The dealt offset angle goes too — the
+   lattice stands plumb level — and the vertical stretch
+   steepens from 1.35x to 2.2x: long tall triangles, ovals
+   drawn out into arches.
+   Study 073. Calvin: STEEPEN TO 2.7x.
+   Study 074. Calvin: STEEPEN AT 3X AND CENTER TO HEIGHT.
+   The stretch goes to 3.0x, and the lattice is rebuilt
+   centred by construction: a crossing sits at the exact
+   centre of the frame and the rows run symmetric above and
+   below it (before, the rows started from the disc's edge,
+   so the pattern's phase against the frame was arbitrary).
+   Study 075. Calvin: BRING THE STRETCH STEEPNESS TO 2 AND
+   KEEP CENTERED TO HEIGHT. LAT_SY 3.0 -> 2.0; the centred
+   construction stands.
+   Study 076. Calvin: REPLACE THE BACKGROUND LATTICE WITH A
+   TESSELLATION OF THE GENERATED RADIOLARIA, IN THE SAME COLOR.
+   The lattice (069-075) is removed entirely. In its place: the
+   current deal's own web — chords, spokes, beads — stamped
+   across the frame in a 4x4 tessellation, alternate cells
+   mirrored, in the lattice's warm ink (chords 0.10, spokes
+   0.07, beads 0.16). The portrait is the deal projected at the
+   swap moment's angle. Pre-rendered to an offscreen canvas
+   once per deal, so a frame costs one drawImage; the room
+   re-deals when the organism does.
+   Study 077. Calvin: 3X3, LARGER WEBS, BRIGHTER — one line
+   each. The tessellation drops to 3x3 cells; the stamp fit
+   rises from 0.46 to 0.60 of the cell, so the webs swell
+   past their cell edges and interlock; the ink brightens
+   (chords 0.16, spokes 0.11, beads 0.24).
+   Study 078. Calvin: MAKE THE LINES SLIGHTLY THINNER AND
+   THE BEADS SMALLER. All linework 2.4px -> 2.0px (chords,
+   chain, spokes); BEAD_R 5.6 -> 4.8, ghosts matching. The
+   tessellation is untouched.
+   Study 079. Calvin: CAN THE BACKGROUND QUICKLY FADE IN AT
+   THE START AND QUICKLY FADE OUT AT THE END? The tessellation
+   now rides an envelope over the pass: a 1.2s smoothstep fade
+   in, full through the middle, a 1.2s fade out — so the room
+   materializes as the deal settles and dissolves before the
+   trigger, which also hides the re-deal swap completely. Rotation is now
+   continuous (it used to reset hidden inside the shrink); the
+   swarm is dealt once and persists; the per-deal hue jump is
+   dropped. The shimmer stays out of the cloud (and is no longer
+   seeded per trigger — seedSmooth returns if the shimmer does).
+   Calvin delta on 044: BRING THE LENGTH TO 16 SECONDS. The loop
+   is now 16s: a 3.5s shift, then 12.5s settled. The rotation
+   follows the loop (still half a revolution per pass, so it turns
+   a touch faster). Colour travel is untouched at 0.35 steps/s —
+   with less settled time per loop, a full wheel now spans about
+   1.4 loops instead of one; say the word and it goes to 0.48 to
+   complete the wheel inside every loop again.
+   Calvin on 045: A FRAME JITTER AT THE LOOP END / START POINT.
+   Two seam faults, both fixed. (1) THE WANDER SNAPPED: the sway
+   and roam were timed on the PASS clock, which resets at the
+   trigger — so at the first shift frame every point's wander
+   offset teleported (up to ~50px counting the new deal's fresh
+   roam). The wander now runs on a continuous global clock and its
+   offsets crossfade across the shift like everything else: at
+   morph zero the drawn points are exactly where the last settled
+   frame left them. (2) THE SEEDING FREEZE: dealing + pre-rolling
+   the next flesh took a synchronous bite (~0.5s) out of the
+   trigger frame — a visible stutter at full size. The next deal
+   is now PREPARED IN THE BACKGROUND during the settled stretch —
+   dealt and bare-seeded in one frame, then pre-rolled five steps
+   per frame — so the loop point itself is just a swap.
+   Calvin delta on 046: MAKE THE PANES NEARLY INVISIBLE. Base
+   alpha 0.17 -> 0.05 — the glass is now a whisper: the sheen
+   shaping (brighter where a pane faces you) is unchanged, so
+   what little shows still behaves like glass.
+   Calvin delta on 047: BRING THE SHIMMER BACK. The SmoothLife
+   wash returns to the sprite cloud at its pre-diagnostic blend —
+   growth 0.85 + shimmer 0.75 on the slow breath — now protected
+   by everything the flicker hunt built: the rate-limited
+   brightness, the half-pace growth, the volume-anchored film.
+   The wash is seeded and pre-rolled per deal again, prepared in
+   the background alongside the flesh (120 steps, sliced five per
+   frame), and its breath runs on the global clock so there is no
+   dip at the seam.
+   Calvin delta on 048: THE GRADIENT SHIFT COMPLETES A FULL
+   CYCLE PER LOOP (the opt-in quoted at 045, now taken). The
+   colour clock still runs only while settled — 12.5s of the 16s
+   loop — so the rate goes 0.35 -> 0.48 steps/s: 12.5 x 0.48 = 6,
+   the whole six-colour wheel, once per loop.
+   Calvin delta on 049: BRING THE PARTICLE SWARM LOCKED INTO THE
+   STRUCTURE WITH THE SPRITE CLOUD, GIVE THE DOTS DIFFERENT
+   COLOURS, AND APPLY THE GRADIENT SHIFT TO THEM AS WELL. The
+   outer dust shell is gone: the flock is now dealt THROUGH THE
+   VOLUME (normalised ball coordinates, so it fits every deal),
+   trapped by the same live cage as the cloud, dissolving at the
+   panes the same way. Each particle is dealt its own colour from
+   the synth palette and rides the same colour clock — the full
+   wheel per loop, desynchronised per particle. The twinkle
+   stays.
+   Calvin delta on 050: REMOVE THE PARTICLE SWARM — NOT NEEDED
+   HERE. The flock is out entirely: no particles inside or out.
+   What remains is the organism itself — linework, panes, and the
+   living cloud.
+   Calvin delta on 051: MAKE THE LIVING CLOUD MORE PROMINENT IN
+   COLOUR, BRIGHTNESS AND SHEEN. The opal mix is re-graded:
+   saturation 84 -> 100%, lightness 82-91 -> 63-74 (the pale wash
+   was bleaching the hue out), alpha ceiling 0.34 -> 0.52, and the
+   thin-film band deepened (0.15 -> 0.22) and given a gleam — the
+   film now swings the lightness too, so the sheen moves through
+   the body as it turns.
+   Calvin delta on 052: DOUBLE THE DENSITY. Each living cell now
+   draws TWO sprites — the second jittered within its cell with
+   its own depth — so the cloud's population doubles without
+   touching the field or its creatures. Same flesh, twice the
+   body.
+   Calvin on 053: I THINK I SAW A REMNANT OF THE PARTICLE SWARM.
+   He was right about the file: the study-050 removal cut the old
+   dealSwarm but left drawSwarm's body standing in the file,
+   orphaned with its inkS helper and the particleswarm stream —
+   dead code with no call sites (it could not draw), but a
+   remnant all the same. Swept properly here: drawSwarm, inkS,
+   and the swarm stream are gone; the only swarm mentions left
+   are in this header's history.
+   Calvin delta on 054: DROPPED POINTS SIMPLY FADE WHERE THEY
+   STAND. The ghosts no longer glide to the centre — each stays
+   at its own place in the formation, wandering as it always did,
+   and fades out across the shift.
+   Post-v3 study 056. Calvin: MAKE THE RADIOLARIA DOTS LARGER AND
+   ADD AN INK COLOURED DOT TO THE CENTRES. Dot radius factor
+   0.8 -> 1.3 (about 1.6x), and each dot now carries a core at
+   42% of its radius in the engine's Ink (the spectrum ink at 80%
+   lightness). Ghosts get the same treatment as they fade.
+   Post-v3 study 057. Calvin: DOUBLE THE LIVING CLOUD DENSITY
+   AGAIN. Each living cell now draws FOUR sprites (two in 053,
+   one before that) — three companions jittered within the cell,
+   each with its own depth.
+   Post-v3 study 058. Calvin: MAKE THE DOTS LARGER AND THE LINES
+   THICKER. Dot radius factor 1.3 -> 2.0; line weight 1.6px ->
+   2.4px (chords and chain alike).
+   Post-v3 study 059. Calvin: EXTEND THE LOOP BY 4 SECONDS, to
+   give the gradients more time to run their course. PASS_MS
+   16000 -> 20000 (shift still 3.5s; settled 12.5s -> 16.5s).
+   The colour rate eases 0.48 -> 0.364 steps/s so the wheel
+   still completes exactly once per loop — the same full course,
+   run slower. Rotation follows the loop as always.
+   Study 060. Calvin: IT LOADS A BIT HEAVY — CLEAN UP ANY CODE
+   OR REDUCE THE WEIGHT ON CPU. A performance pass that changes
+   NO output: (1) the projection's tilt/rotation trig is computed
+   once per frame instead of once per sprite; (2) the cloud's
+   per-cell hash values are precomputed once into tables instead
+   of a Math.sin per sprite per frame; (3) both fields' inner
+   loops skip bounds checks for interior cells (same sums, same
+   order); (4) the cage test gains an inscribed fast path —
+   sprites well inside skip the plane loop entirely; (5) the
+   old 2D blit renderers (renderLenia/renderSmooth + their
+   canvases), dead since the volumetric turn, are removed.
+   Study 061. Calvin: CAN THE SPRITE CLOUD GO THROUGH A COLOR
+   GRADIENT PER LOOP AS WELL? Yes — the cloud's hue is now
+   carried by the same colour clock as the dots and lines: from
+   its violet band it travels the full spectrum across the
+   settled stretch and lands back on its band as the loop ends,
+   exactly one cycle per loop, freezing during the shift just
+   as the line colours do. (The slow huePhase drift no longer
+   drives the cloud's base; the film bands still crawl with it.)
+   Study 062. Calvin: PUT A SMALLER DARK GREY DOT ONTO EACH
+   POINT DOT AT 80% OPACITY. Each point dot gains a dark grey
+   pupil (rgb 46,46,46) at 24% of its radius, centred on top of
+   the Ink core — bead, pale ring, dark pupil. Ghosts carry the
+   pupil too, fading with them.
+   Study 063. Calvin: REPLACE THE PALE RING WITH THE DARK GREY
+   CIRCLE. The Ink core is gone; in its place the dark grey
+   circle sits at the ring's own size (42% of the dot), still at
+   80% opacity — bead and dark centre, two layers. Ghosts match.
+   Study 064. Calvin: REDUCE THE SIZE OF THE BEADS SLIGHTLY.
+   Dot radius factor 2.0 -> 1.7 (the grey centre scales with
+   its bead, as always).
+   Study 065. Calvin: CAN I SEE IT WITH THE SPOKES PUT BACK,
+   WITH THE LINEWORK PARAMETERS. The spokes return: from the
+   organism's projected centre to every point, drawn in the
+   linework's own terms — each spoke in its point's current
+   palette colour, 2.4px, full strength — laid under the chords
+   so the web still crosses over them.
+   Study 066. Calvin locked 065 as v4, then: LETS PLAY WITH THE
+   GENERATION PARAMETERS — the dot count maxes and mins out.
+   He is right: the count is dealt rr(9, 15) = 9-14 points
+   (study 034 set that cap, down from 9-21). This study makes
+   the range two variables (CNT_LO / CNT_HI, defaulting to the
+   locked 9 / 15) and adds a #counts sheet: four deals at four
+   ranges — 5-8, 9-14 (current), 15-21, 22-30 — so the count's
+   effect can be seen side by side. Live mode is unchanged.
+   Study 067. Calvin: LETS DO 9 TO 19, AND MAKE THE BEAD SIZE
+   UNIFORM AND CONSISTENT ACROSS LOOPS. The count range widens
+   to 9-19. The beads lose their dealt sizes (tip rr(2.0, 4.6)
+   made every bead — and every loop — a different size): one
+   fixed radius BEAD_R = 5.6, the old average, varied only by
+   perspective. The grey centres scale with their beads.
+   Study 069. Calvin picked the BACKDROP LATTICE from the
+   background menu: a huge, dim triangular lattice — the room
+   behind the organism — dealt from its own stream off the same
+   seed (spacing and rotation offset are dealt), drawn behind
+   everything in warm ink, turning with the organism at 0.16x
+   its speed. Built once as two paths (inner brighter, outer
+   fainter, dots at the crossings), so a frame costs two strokes
+   and a fill. Separate from the structure, related by seed,
+   geometry and motion.
+   Study 070. Calvin: BRIGHTER AND MORE COMPLEX PATTERNING.
+   The lattice weave tightens (spacing 80-102 -> 52-68), the
+   ink roughly doubles (lines 0.13/0.07, dots 0.18), and an
+   intersecting CIRCLE layer joins the triangle grid — a
+   circle on every lattice point at radius spacing/2, passing
+   through its neighbours' centres: the circle-lattice over
+   the triangle grid, in warm ink behind the organism.
+   Study 071. Calvin: STRETCH THE LATTICE VERTICALLY AND
+   REMOVE THE ROTATION. The room now stands still — only its
+   dealt offset angle remains — and the whole lattice (grid,
+   circles, dots) is scaled 1.35x in Y: taller triangles,
+   oval circles, a room that reaches up.
+   Study 072. Calvin: LEVEL THE BACKGROUND, THEN STRETCH
+   VERTICALLY STEEPLY. The dealt offset angle goes too — the
+   lattice stands plumb level — and the vertical stretch
+   steepens from 1.35x to 2.2x: long tall triangles, ovals
+   drawn out into arches.
+   Study 073. Calvin: STEEPEN TO 2.7x.
+   Study 074. Calvin: STEEPEN AT 3X AND CENTER TO HEIGHT.
+   The stretch goes to 3.0x, and the lattice is rebuilt
+   centred by construction: a crossing sits at the exact
+   centre of the frame and the rows run symmetric above and
+   below it (before, the rows started from the disc's edge,
+   so the pattern's phase against the frame was arbitrary).
+   Study 075. Calvin: BRING THE STRETCH STEEPNESS TO 2 AND
+   KEEP CENTERED TO HEIGHT. LAT_SY 3.0 -> 2.0; the centred
+   construction stands.
+   Study 076. Calvin: REPLACE THE BACKGROUND LATTICE WITH A
+   TESSELLATION OF THE GENERATED RADIOLARIA, IN THE SAME COLOR.
+   The lattice (069-075) is removed entirely. In its place: the
+   current deal's own web — chords, spokes, beads — stamped
+   across the frame in a 4x4 tessellation, alternate cells
+   mirrored, in the lattice's warm ink (chords 0.10, spokes
+   0.07, beads 0.16). The portrait is the deal projected at the
+   swap moment's angle. Pre-rendered to an offscreen canvas
+   once per deal, so a frame costs one drawImage; the room
+   re-deals when the organism does.
+   Study 077. Calvin: 3X3, LARGER WEBS, BRIGHTER — one line
+   each. The tessellation drops to 3x3 cells; the stamp fit
+   rises from 0.46 to 0.60 of the cell, so the webs swell
+   past their cell edges and interlock; the ink brightens
+   (chords 0.16, spokes 0.11, beads 0.24).
+   Study 078. Calvin: MAKE THE LINES SLIGHTLY THINNER AND
+   THE BEADS SMALLER. All linework 2.4px -> 2.0px (chords,
+   chain, spokes); BEAD_R 5.6 -> 4.8, ghosts matching. The
+   tessellation is untouched.
+   Study 079. Calvin: CAN THE BACKGROUND QUICKLY FADE IN AT
+   THE START AND QUICKLY FADE OUT AT THE END? The tessellation
+   now rides an envelope over the pass: a 1.2s smoothstep fade
+   in, full through the middle, a 1.2s fade out — so the room
+   materializes as the deal settles and dissolves before the
+   trigger, which also hides the re-deal swap completely.
+   Calvin delta on 007: the sizing RESTS at the peak for 7 seconds —
+   grow 6s, hold at full size 7s, shrink 6s — making the full pass
+   19 SECONDS.
+   Samples 001–010 remain on disk as auditions; nothing here is locked. */
+'use strict';
+var W = 720, H = 720;
+var cv = document.getElementById('c'), ctx = cv.getContext('2d');
+
+function xmur3(str){for(var i=0,h=1779033703^str.length;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^=h>>>16)>>>0}}
+function sfc32(a,b,c,d){return function(){a>>>=0;b>>>=0;c>>>=0;d>>>=0;var t=(a+b|0)+d|0;d=d+1|0;a=b^b>>>9;b=c+(c<<3)|0;c=(c<<21|c>>>11)+t|0;return (t>>>0)/4294967296}}
+function stream(name){var s=xmur3('sporatic-radiolaria-003:'+name)();return sfc32(s, s^0x9e3779b9, s^0x85ebca6b, s^0xc2b2ae35)}
+var rng = stream('layer:radiolaria');
+function rr(a,b){return a+(b-a)*rng()}
+var rngL = stream('layer:lenia');
+function rrL(a,b){return a+(b-a)*rngL()}
+var rngW = stream('layer:smoothlife');
+function rrW(a,b){return a+(b-a)*rngW()}
+
+var huePhase = 0.38; // the radiolaria band of the spectrum
+function ink(alpha){
+  var h = ((huePhase % 1) + 1) % 1;
+  return 'hsla(' + Math.floor(h*360) + ',100%,80%,' + alpha + ')';
+}
+
+/* --- the Radiolaria generator: one deal = one skeleton --- */
+/* the synth palette: Tidal's six neon dot colours, as carried by the
+   Hash-Seed Harmonic Synthesizer */
+var PAL = [[182,255,0],[0,255,102],[0,240,255],[46,107,255],[139,43,255],[255,43,214]];
+function pcolMix(k, ci, ct){
+  var f = (ci + ct * 0.364 + k * 0.61) % 6; if (f < 0) f += 6; // 0.364 steps/s: the full wheel across the 16.5 settled seconds of each 20s loop
+  var i0 = Math.floor(f), fr = f - i0; fr = fr * fr * (3 - 2 * fr);
+  var c1 = PAL[i0], c2 = PAL[(i0 + 1) % 6];
+  return [Math.round(c1[0] + (c2[0] - c1[0]) * fr), Math.round(c1[1] + (c2[1] - c1[1]) * fr), Math.round(c1[2] + (c2[2] - c1[2]) * fr)];
+}
+/* --- the tessellation: the room re-walled with the organism itself (076) --- */
+var tessDeal = null, tessCanvas = null;
+function buildTessellation(g, S, beta){
+  PCB = Math.cos(beta); PSB = Math.sin(beta);
+  var cv = document.createElement('canvas'); cv.width = S; cv.height = S;
+  var c2 = cv.getContext('2d');
+  var pts = [], maxR = 1, i, j;
+  for (i = 0; i < g.spokes.length; i++){
+    var pr = proj3(g.spokes[i].bx, g.spokes[i].by, g.spokes[i].bz, beta, 0, 0); // the deal's shell point (bx, by, bz)
+    pts.push([pr[0], pr[1]]);
+    var d = Math.hypot(pr[0], pr[1]); if (d > maxR) maxR = d;
+  }
+  var TN = 3, CS = S / TN, k = (CS * 0.60) / maxR; // 3x3 cells (077); larger webs — the stamp fit rises to 0.60 of the cell
+  var ccx = 0, ccy = 0;
+  for (i = 0; i < pts.length; i++){ ccx += pts[i][0]; ccy += pts[i][1]; }
+  ccx /= pts.length; ccy /= pts.length;
+  c2.lineWidth = Math.max(0.6, S / 720);
+  for (var row = 0; row < TN; row++) for (var col = 0; col < TN; col++){
+    var fx = (col % 2) ? -1 : 1, fy = (row % 2) ? -1 : 1; // mirrored alternately — a true tessellation
+    c2.save();
+    c2.translate((col + 0.5) * CS, (row + 0.5) * CS);
+    c2.scale(fx * k, fy * k);
+    c2.strokeStyle = 'rgba(232,226,212,0.16)'; // brighter (077)
+    c2.beginPath();
+    for (i = 0; i < pts.length; i++) for (j = i + 1; j < pts.length; j++){ c2.moveTo(pts[i][0], pts[i][1]); c2.lineTo(pts[j][0], pts[j][1]); }
+    c2.stroke();
+    c2.strokeStyle = 'rgba(232,226,212,0.11)';
+    c2.beginPath();
+    for (i = 0; i < pts.length; i++){ c2.moveTo(ccx, ccy); c2.lineTo(pts[i][0], pts[i][1]); }
+    c2.stroke();
+    c2.fillStyle = 'rgba(232,226,212,0.24)';
+    for (i = 0; i < pts.length; i++){ c2.beginPath(); c2.arc(pts[i][0], pts[i][1], 5.6, 0, 6.2832); c2.fill(); }
+    c2.restore();
+  }
+  return cv;
+}
+var CNT_LO = 9, CNT_HI = 20; // the dot-count range (066 made it variables; 067: widened to 9-19 at Calvin's direction)
+var BEAD_R = 4.8; // the bead radius at unit perspective (067: uniform — the same size in every loop; 078: slightly smaller, 5.6 -> 4.8)
+function dealRadiolaria(R, capR3){
+  var n = Math.floor(rr(CNT_LO, CNT_HI)), rot = rr(0, 6.2832), spokes = []; // point count: CNT_LO..CNT_HI-1 (locked range 9-14, set at 034; was 9-21)
+  for (var i=0;i<n;i++) spokes.push({
+    a: rot + (i/n)*6.2832 + rr(-0.07, 0.07),
+    l: rr(0.7, 1.25), w: rr(1.0, 2.4),
+    tip: rr(2.0, 4.6), spike: rng() < 0.3 });
+  var rings = [], nR = Math.floor(rr(1, 4));
+  for (var j=0;j<nR;j++) rings.push(rr(0.25, 0.85));
+  rings.sort();
+  var webR = 0, webR3 = 0;
+  for (var k=0;k<spokes.length;k++){
+    spokes[k].roamA = rr(12, 26); spokes[k].roamB = rr(8, 20); spokes[k].roamP = rr(0, 6.2832); spokes[k].roamD = rng() < 0.5 ? -1 : 1;
+    spokes[k].swA = rr(4, 8); spokes[k].swP = rr(0, 6.2832); spokes[k].swW = rr(1.2, 2.4);
+    if (spokes[k].l * R > webR) webR = spokes[k].l * R;
+    var phi = Math.acos(rr(-1, 1)), rad3 = spokes[k].l * R;
+    spokes[k].bx = rad3 * Math.sin(phi) * Math.cos(spokes[k].a);
+    spokes[k].by = rad3 * Math.cos(phi);
+    spokes[k].bz = rad3 * Math.sin(phi) * Math.sin(spokes[k].a);
+    spokes[k].ci = Math.floor(rr(0, 6)); // a dealt colour from the synth palette
+    if (rad3 > webR3) webR3 = rad3;
+  }
+  // grow the web a bit larger, clamped to a frame-safe radius
+  var WS = Math.min(1.22, (capR3 || 335) / webR3);
+  if (WS !== 1){ for (var s2=0;s2<spokes.length;s2++){ spokes[s2].bx *= WS; spokes[s2].by *= WS; spokes[s2].bz *= WS; } webR3 = webR3 * WS; }
+  // the shape's sides: convex-hull faces of the dealt points
+  var faces = [];
+  (function(){
+    var n = spokes.length, i, j, k, m;
+    for (i=0;i<n;i++) for (j=i+1;j<n;j++) for (k=j+1;k<n;k++){
+      var A = spokes[i], B = spokes[j], C2 = spokes[k];
+      var ux = B.bx-A.bx, uy = B.by-A.by, uz = B.bz-A.bz;
+      var vx = C2.bx-A.bx, vy = C2.by-A.by, vz = C2.bz-A.bz;
+      var nx = uy*vz-uz*vy, ny = uz*vx-ux*vz, nz = ux*vy-uy*vx;
+      var d = nx*A.bx + ny*A.by + nz*A.bz, pos = false, neg = false;
+      for (m=0;m<n;m++){ if (m===i||m===j||m===k) continue; var s3 = nx*spokes[m].bx + ny*spokes[m].by + nz*spokes[m].bz - d; if (s3 > 1e-6) pos = true; else if (s3 < -1e-6) neg = true; if (pos && neg) break; }
+      if (pos && neg) continue;
+      faces.push({ v: [i, j, k], zt: ((A.bz + B.bz + C2.bz) / 3) / (webR3 || 1) });
+    }
+  })();
+  // the hull's outward planes — the cloud's cage
+  var planes = [];
+  (function(){
+    var n = spokes.length, cx3 = 0, cy3 = 0, cz3 = 0, i;
+    for (i=0;i<n;i++){ cx3 += spokes[i].bx; cy3 += spokes[i].by; cz3 += spokes[i].bz; }
+    cx3 /= n; cy3 /= n; cz3 /= n;
+    for (i=0;i<faces.length;i++){
+      var A = spokes[faces[i].v[0]], B = spokes[faces[i].v[1]], C2 = spokes[faces[i].v[2]];
+      var ux = B.bx-A.bx, uy = B.by-A.by, uz = B.bz-A.bz;
+      var vx = C2.bx-A.bx, vy = C2.by-A.by, vz = C2.bz-A.bz;
+      var nx = uy*vz-uz*vy, ny = uz*vx-ux*vz, nz = ux*vy-uy*vx;
+      if (nx*(cx3-A.bx) + ny*(cy3-A.by) + nz*(cz3-A.bz) > 0){ nx = -nx; ny = -ny; nz = -nz; }
+      var nl = Math.sqrt(nx*nx + ny*ny + nz*nz) || 1;
+      planes.push({ ax: A.bx, ay: A.by, az: A.bz, nx: nx/nl, ny: ny/nl, nz: nz/nl });
+    }
+  })();
+  return { R: R, webR: webR, webR3: webR3, spokes: spokes, rings: rings, hub: rr(3, 6.5), lw: rr(1.2, 2.2), faces: faces, planes: planes };
+}
+var TILT = 0.42, FOC = 1400;
+var CTC = Math.cos(TILT), STC = Math.sin(TILT); // the tilt never changes (060)
+var PCB = 1, PSB = 0; // the frame's rotation, set once per drawVolume (060)
+function proj3(x, y, z, beta, cx, cy){
+  var x1 = x * PCB + z * PSB, z1 = -x * PSB + z * PCB;
+  var y2 = y * CTC - z1 * STC, z2 = y * STC + z1 * CTC;
+  var ps = FOC / (FOC + z2);
+  return [cx + x1 * ps, cy + y2 * ps, z2, ps, x1, y2]; // [4],[5]: view-space x,y (z is [2]) — for the panes' normals
+}
+function hashZ(i){ var v = Math.sin(i * 12.9898) * 43758.5453; return (v - Math.floor(v)) * 2 - 1; }
+/* the convex hull of a set of [x,y,z] points — the deal's brute-force
+   test, now run per frame on the live points so the panes and the
+   cage follow a shift exactly */
+function hullFaces(pts, R3){
+  var n = pts.length, out = [], i, j, k, m;
+  for (i=0;i<n;i++) for (j=i+1;j<n;j++) for (k=j+1;k<n;k++){
+    var A = pts[i], B = pts[j], C2 = pts[k];
+    var ux = B[0]-A[0], uy = B[1]-A[1], uz = B[2]-A[2];
+    var vx = C2[0]-A[0], vy = C2[1]-A[1], vz = C2[2]-A[2];
+    var nx = uy*vz-uz*vy, ny = uz*vx-ux*vz, nz = ux*vy-uy*vx;
+    var d = nx*A[0] + ny*A[1] + nz*A[2], pos = false, neg = false;
+    for (m=0;m<n;m++){ if (m===i||m===j||m===k) continue; var s3 = nx*pts[m][0] + ny*pts[m][1] + nz*pts[m][2] - d; if (s3 > 1e-6) pos = true; else if (s3 < -1e-6) neg = true; if (pos && neg) break; }
+    if (pos && neg) continue;
+    out.push({ v: [i, j, k], zt: ((A[2] + B[2] + C2[2]) / 3) / (R3 || 1) });
+  }
+  return out;
+}
+var cloudSint = null, cloudWarm = false; // the cloud's brightness memory, kept across deals so the glow crossfades at a shift
+function wobOff(q, tt, ph){ // a point's wander offset at global time tt / phase ph
+  var orb = ph * 6.2832 * q.roamD + q.roamP;
+  return [Math.cos(orb) * q.roamA + Math.cos(tt * q.swW + q.swP) * q.swA,
+          Math.sin(orb) * q.roamB + Math.sin(tt * q.swW + q.swP) * q.swA,
+          Math.sin(tt * q.swW * 0.9 + q.swP * 1.7) * q.swA];
+}
+function drawVolume(g, prevG, morphK, cx, cy, el, passMs, beta, ct, gt){
+  var gt2 = (gt != null ? gt : (el || 0));
+  PCB = Math.cos(beta); PSB = Math.sin(beta); // this frame's rotation, computed once for every projection (060)
+  var cageIn = 0;
+  var tt = gt2 / 1000; // global time — the wander never resets at a trigger
+  var ph = gt2 / (passMs || 24000); // roam phase in pass units, unwrapped
+  var R3 = g.webR3 || g.R, p, q;
+  if (prevG) R3 = (prevG.webR3 || prevG.R) + (R3 - (prevG.webR3 || prevG.R)) * morphK;
+  // the shift: base positions glide from the old deal to the new one;
+  // points the new deal adds are born at its centre, on their way out
+  var BASE = [], nc = [0, 0, 0];
+  for (p=0;p<g.spokes.length;p++){ nc[0] += g.spokes[p].bx; nc[1] += g.spokes[p].by; nc[2] += g.spokes[p].bz; }
+  nc[0] /= g.spokes.length; nc[1] /= g.spokes.length; nc[2] /= g.spokes.length;
+  for (p=0;p<g.spokes.length;p++){ q = g.spokes[p];
+    if (prevG && p < prevG.spokes.length){ var pq = prevG.spokes[p]; BASE.push([pq.bx + (q.bx - pq.bx) * morphK, pq.by + (q.by - pq.by) * morphK, pq.bz + (q.bz - pq.bz) * morphK]); }
+    else if (prevG){ BASE.push([nc[0] + (q.bx - nc[0]) * morphK, nc[1] + (q.by - nc[1]) * morphK, nc[2] + (q.bz - nc[2]) * morphK]); }
+    else BASE.push([q.bx, q.by, q.bz]);
+  }
+  var P = [], W = [];
+  for (p=0;p<g.spokes.length;p++){ q = g.spokes[p];
+    var off = wobOff(q, tt, ph);
+    if (prevG && p < prevG.spokes.length && morphK < 1){ var offP = wobOff(prevG.spokes[p], tt, ph); off = [offP[0] + (off[0] - offP[0]) * morphK, offP[1] + (off[1] - offP[1]) * morphK, offP[2] + (off[2] - offP[2]) * morphK]; } // the wander itself crossfades across the shift — no snap at the seam
+    W.push([BASE[p][0] + off[0], BASE[p][1] + off[1], BASE[p][2] + off[2]]);
+    P.push(proj3(BASE[p][0] + off[0], BASE[p][1] + off[1], BASE[p][2] + off[2], beta, cx, cy));
+  }
+  // the live cage: hull planes of the WANDERING points, rebuilt each
+  // frame so the cloud's trap is exactly the panes as drawn
+  var facesNow = hullFaces(W, R3); // hull of the live (shifting, wandering) points
+  var lplanes = null;
+  if (facesNow.length){
+    var cw = [0, 0, 0], wi;
+    for (wi=0; wi<W.length; wi++){ cw[0] += W[wi][0]; cw[1] += W[wi][1]; cw[2] += W[wi][2]; }
+    cw[0] /= W.length; cw[1] /= W.length; cw[2] /= W.length;
+    lplanes = [];
+    for (var fi2=0; fi2<facesNow.length; fi2++){
+      var A2 = W[facesNow[fi2].v[0]], B2 = W[facesNow[fi2].v[1]], C3 = W[facesNow[fi2].v[2]];
+      var ux2 = B2[0]-A2[0], uy2 = B2[1]-A2[1], uz2 = B2[2]-A2[2];
+      var vx2 = C3[0]-A2[0], vy2 = C3[1]-A2[1], vz2 = C3[2]-A2[2];
+      var nx2 = uy2*vz2-uz2*vy2, ny2 = uz2*vx2-ux2*vz2, nz2 = ux2*vy2-uy2*vx2;
+      if (nx2*(cw[0]-A2[0]) + ny2*(cw[1]-A2[1]) + nz2*(cw[2]-A2[2]) > 0){ nx2 = -nx2; ny2 = -ny2; nz2 = -nz2; }
+      var nl2 = Math.sqrt(nx2*nx2 + ny2*ny2 + nz2*nz2) || 1;
+      lplanes.push({ ax: A2[0], ay: A2[1], az: A2[2], nx: nx2/nl2, ny: ny2/nl2, nz: nz2/nl2 });
+    }
+    cageIn = 1e9; // the centroid's distance to the nearest pane, less the dissolve band: sprites nearer than this are certainly inside (060)
+    for (var cp=0; cp<lplanes.length; cp++){ var pl0 = lplanes[cp]; var dc0 = -((cw[0]-pl0.ax)*pl0.nx + (cw[1]-pl0.ay)*pl0.ny + (cw[2]-pl0.az)*pl0.nz); if (dc0 < cageIn) cageIn = dc0; }
+    cageIn -= 12;
+  }
+  var PCOL = [];
+  for (p=0;p<g.spokes.length;p++){ var cN = pcolMix(p, g.spokes[p].ci, ct || 0);
+    if (prevG && p < prevG.spokes.length && morphK < 1){ var cP = pcolMix(p, prevG.spokes[p].ci, ct || 0); PCOL.push([Math.round(cP[0] + (cN[0] - cP[0]) * morphK), Math.round(cP[1] + (cN[1] - cP[1]) * morphK), Math.round(cP[2] + (cN[2] - cP[2]) * morphK)]); }
+    else PCOL.push(cN);
+  }
+  function dq(z2){ var d = 1.08 - 0.55 * ((z2 + R3) / (2 * R3)); return d < 0.3 ? 0.3 : (d > 1.1 ? 1.1 : d); }
+  // the flesh as a volumetric sprite cloud, sampled from the living fields
+  if (lenia && lenia.g === g){
+    var H = lenia.H, cs = 2 * H / LG, CR = H * 0.98;
+    var webRc = g.webR || H; if (prevG) webRc = (prevG.webR || H) + (webRc - (prevG.webR || H)) * morphK;
+    var inv = 1 / webRc;
+    // (per-sprite hue below: a gradient through the volume, centred on the flesh band)
+    var pulse = (smooth && smooth.g === g) ? (0.78 + 0.22 * Math.sin(gt2 * 0.0009)) : 1; // slower, softer breath — on the global clock, no dip at the seam
+    if (!cloudSint) cloudSint = new Float32Array(LG * LG);
+    var snapI = !cloudWarm; cloudWarm = true; // only the very first draw takes the field as it is — afterwards the glow crossfades across deals
+    for (var idx=0; idx<LG*LG; idx++){
+      if (!lenia.mask[idx] && cloudSint[idx] < 0.05) continue; // outside the new flesh, a sprite lives on its fading brightness
+      var lv = lenia.A[idx], sv = 0;
+      if (smooth && smooth.g === g){ var sx2 = Math.floor((idx % LG) / LG * SG), sy2 = Math.floor(Math.floor(idx / LG) / LG * SG); sv = smooth.A[sy2 * SG + sx2]; }
+      var inten = lv * 0.85 + sv * 0.75 * pulse; if (inten > 1) inten = 1; // THE SHIMMER IS BACK in the cloud (Calvin): growth + wash on its slow breath
+      var si = cloudSint[idx]; if (snapI) si = inten; else { var dsi = (inten - si) * 0.055; if (dsi > 0.015) dsi = 0.015; else if (dsi < -0.015) dsi = -0.015; si += dsi; } cloudSint[idx] = si; inten = si; if (inten < 0.05) continue;
+      var gx = idx % LG, gy = Math.floor(idx / LG);
+      for (var sub=0; sub<4; sub++){ // density quadrupled (057): three companions per cell, jittered within the cell, each its own depth
+        var rx = -H + (gx + 0.5) * cs + (sub ? HJ_X[sub][idx] * cs * 0.55 : 0), ry = -H + (gy + 0.5) * cs + (sub ? HJ_Y[sub][idx] * cs * 0.55 : 0);
+        var nx = rx * inv, ny = ry * inv, rn = Math.sqrt(nx*nx + ny*ny); if (rn > 1.02) continue;
+        var vz = (sub ? HJ_Z[sub][idx] : HJ_M[idx]) * 0.82 * CR * Math.sqrt(Math.max(0, 1 - rn * rn));
+      var svx = nx * CR, svy = ny * CR;
+      var slack = 1e9;
+      if (lplanes){ var dwx = svx-cw[0], dwy = svy-cw[1], dwz = vz-cw[2]; if (!(cageIn > 0 && dwx*dwx + dwy*dwy + dwz*dwz < cageIn * cageIn)){ var ins = true; for (var fp=0; fp<lplanes.length; fp++){ var pl = lplanes[fp]; var pd = (svx-pl.ax)*pl.nx + (svy-pl.ay)*pl.ny + (vz-pl.az)*pl.nz; if (pd > 1.0){ ins = false; break; } if (-pd < slack) slack = -pd; } if (!ins) continue; } }
+      var pr = proj3(svx, svy, vz, beta, cx, cy);
+      var dqS = 1.08 - 0.55 * ((pr[2] + CR) / (2 * CR)); dqS = dqS < 0.3 ? 0.3 : (dqS > 1.1 ? 1.1 : dqS);
+      var al = inten * 0.52 * dqS * (slack >= 12 ? 1 : Math.max(0, slack) / 12); if (al < 0.01) continue; // dissolve at the panes, never pop — alpha ceiling raised (Calvin: more prominent)
+      var zt = vz / (0.82 * CR); zt = zt > 1 ? 1 : (zt < -1 ? -1 : zt);
+      // opalescence: thin-film colour bands through the depth — they
+      // crawl with the hue phase and ripple as the volume turns —
+      // over a patchwork jitter (the harlequin flash)
+      var film = 0.22 * Math.sin(zt * 1.8 + huePhase * 6.0); // bands anchored in the volume — crawl with the phase, no churn on the turn; deepened for sheen
+      var hue = (((0.34 + (ct || 0) * 0.364 / 6 + zt * 0.14 + rn * 0.05 + film + HJ_H[idx] * 0.03) % 1) + 1) % 1; // the flesh band, carried through the full spectrum once per loop by the colour clock (061)
+      ctx.fillStyle = 'hsla(' + Math.floor(hue * 360) + ',100%,' + Math.round(63 + inten * 11 + film * 34) + '%,' + al.toFixed(3) + ')'; // full saturation, colour-forward lightness, the film's gleam in the lightness
+      var sz = (2.2 + 4.8 * inten) * pr[3]; // sprite size scaled with the enlargement, so the cloud holds together as a volume
+      ctx.fillRect(pr[0] - sz/2, pr[1] - sz/2, sz, sz);
+      }
+    }
+  }
+  // the shape's sides: GLASSY panes in the COMPLEMENT of the line hue,
+  // far-to-near, under the lines. Panes facing the viewer catch the
+  // light — stronger, lighter, less saturated (the sheen); edge-on
+  // panes go faint.
+  if (facesNow.length){
+    var fl = [];
+    for (var fi=0; fi<facesNow.length; fi++){ var f0 = facesNow[fi]; fl.push({ f: f0, z: (P[f0.v[0]][2] + P[f0.v[1]][2] + P[f0.v[2]][2]) / 3 }); }
+    // fixed draw order (no per-frame depth re-sort — every swap was a pop at an overlap)
+    for (var fj=0; fj<fl.length; fj++){ var ff = fl[fj].f;
+      var PA = P[ff.v[0]], PB = P[ff.v[1]], PC = P[ff.v[2]];
+      var ux = PB[4]-PA[4], uy = PB[5]-PA[5], uz = PB[2]-PA[2];
+      var vx = PC[4]-PA[4], vy = PC[5]-PA[5], vz = PC[2]-PA[2];
+      var nx = uy*vz-uz*vy, ny = uz*vx-ux*vz, nz = ux*vy-uy*vx;
+      var nl = Math.sqrt(nx*nx + ny*ny + nz*nz);
+      var facing = nl > 0 ? Math.abs(nz) / nl : 0;
+      var hueD = Math.floor(((((huePhase + 0.5 + ff.zt * 0.10) % 1) + 1) % 1) * 360);
+      var al = 0.05 * dq(fl[fj].z) * (0.55 + 0.65 * facing); // nearly invisible panes (Calvin)
+      ctx.fillStyle = 'hsla(' + hueD + ',' + Math.round(100 - 30 * facing) + '%,' + Math.round(80 + 14 * facing) + '%,' + al.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.moveTo(PA[0], PA[1]); ctx.lineTo(PB[0], PB[1]); ctx.lineTo(PC[0], PC[1]);
+      ctx.closePath(); ctx.fill();
+    }
+  }
+  // cross-chords: ALL at full opacity; drawn far-to-near
+  var chords = [], a2, b2;
+  for (a2=0;a2<g.spokes.length;a2++) for (b2=a2+1;b2<g.spokes.length;b2++){
+    var A = g.spokes[a2], B = g.spokes[b2];
+    var dx = B.bx - A.bx, dy = B.by - A.by, dz = B.bz - A.bz;
+    chords.push({ a: a2, b: b2, d: Math.sqrt(dx*dx + dy*dy + dz*dz) });
+  }
+  chords.sort(function(p2, q2){ return p2.d - q2.d; });
+  var segs = [];
+  for (var ci=0; ci<chords.length; ci++){
+    var rk = chords.length > 1 ? ci / (chords.length - 1) : 0;
+    var ch = chords[ci];
+    segs.push({ a: ch.a, b: ch.b, z: (P[ch.a][2] + P[ch.b][2]) / 2, al: 1.0 });
+  }
+  // spokes (065): the radiolaria's rays, restored with the linework parameters
+  var cenW = [0, 0, 0];
+  for (var sp2=0; sp2<W.length; sp2++){ cenW[0] += W[sp2][0]; cenW[1] += W[sp2][1]; cenW[2] += W[sp2][2]; }
+  cenW[0] /= W.length; cenW[1] /= W.length; cenW[2] /= W.length;
+  var cenP = proj3(cenW[0], cenW[1], cenW[2], beta, cx, cy);
+  ctx.lineWidth = 2.0;
+  for (var sp3=0; sp3<P.length; sp3++){
+    ctx.strokeStyle = 'rgb(' + PCOL[sp3][0] + ',' + PCOL[sp3][1] + ',' + PCOL[sp3][2] + ')';
+    ctx.beginPath(); ctx.moveTo(cenP[0], cenP[1]); ctx.lineTo(P[sp3][0], P[sp3][1]); ctx.stroke();
+  }
+  // fixed draw order, as with the panes
+  ctx.lineWidth = 2.0; // matched to the chain's weight — all linework one boldness
+  for (var sj=0; sj<segs.length; sj++){ var sg2 = segs[sj];
+    var gr = ctx.createLinearGradient(P[sg2.a][0], P[sg2.a][1], P[sg2.b][0], P[sg2.b][1]);
+    gr.addColorStop(0, 'rgb(' + PCOL[sg2.a][0] + ',' + PCOL[sg2.a][1] + ',' + PCOL[sg2.a][2] + ')');
+    gr.addColorStop(1, 'rgb(' + PCOL[sg2.b][0] + ',' + PCOL[sg2.b][1] + ',' + PCOL[sg2.b][2] + ')');
+    ctx.strokeStyle = gr;
+    ctx.beginPath(); ctx.moveTo(P[sg2.a][0], P[sg2.a][1]); ctx.lineTo(P[sg2.b][0], P[sg2.b][1]); ctx.stroke();
+  }
+  // the dot-to-dot chain at full strength
+  ctx.lineWidth = 2.0;
+  for (var t=0;t<P.length;t++){ var t2 = (t + 1) % P.length;
+    var gr2 = ctx.createLinearGradient(P[t][0], P[t][1], P[t2][0], P[t2][1]);
+    gr2.addColorStop(0, 'rgb(' + PCOL[t][0] + ',' + PCOL[t][1] + ',' + PCOL[t][2] + ')');
+    gr2.addColorStop(1, 'rgb(' + PCOL[t2][0] + ',' + PCOL[t2][1] + ',' + PCOL[t2][2] + ')');
+    ctx.strokeStyle = gr2;
+    ctx.beginPath(); ctx.moveTo(P[t][0], P[t][1]); ctx.lineTo(P[t2][0], P[t2][1]); ctx.stroke();
+  }
+  // dots — larger, each with a dark grey centre
+  for (var d2=0; d2<P.length; d2++){
+    var dr = BEAD_R * P[d2][3]; // uniform beads (067): one fixed radius, only perspective varies it
+    ctx.fillStyle = 'rgba(' + PCOL[d2][0] + ',' + PCOL[d2][1] + ',' + PCOL[d2][2] + ',' + (0.95 * dq(P[d2][2])).toFixed(3) + ')';
+    ctx.beginPath(); ctx.arc(P[d2][0], P[d2][1], dr, 0, 6.2832); ctx.fill();
+    ctx.fillStyle = 'rgba(46,46,46,0.8)'; // the dark grey centre, in place of the pale Ink ring (063)
+    ctx.beginPath(); ctx.arc(P[d2][0], P[d2][1], dr * 0.42, 0, 6.2832); ctx.fill();
+  }
+  // ghosts: points the new deal drops fade where they stand — their
+  // own place, their own wander, gone by the end of the shift
+  if (prevG && morphK < 1){
+    for (var gi=g.spokes.length; gi<prevG.spokes.length; gi++){ var gp = prevG.spokes[gi];
+      var goff = wobOff(gp, tt, ph);
+      var gpr = proj3(gp.bx + goff[0], gp.by + goff[1], gp.bz + goff[2], beta, cx, cy);
+      var gc = pcolMix(gi, gp.ci, ct || 0);
+      ctx.fillStyle = 'rgba(' + gc[0] + ',' + gc[1] + ',' + gc[2] + ',' + (0.9 * (1 - morphK) * dq(gpr[2])).toFixed(3) + ')';
+      var gdr = BEAD_R * gpr[3];
+      ctx.beginPath(); ctx.arc(gpr[0], gpr[1], gdr, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = 'rgba(46,46,46,' + (0.8 * (1 - morphK)).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(gpr[0], gpr[1], gdr * 0.42, 0, 6.2832); ctx.fill();
+    }
+  }
+}
+
+/* --- the Lenia Field: flesh confined WITHIN the linework --- */
+var LG = 160, lenia = null;
+var KOFF = [];
+(function(){ var RK = 9, tmp = [], sum = 0;
+  for (var dy=-RK; dy<=RK; dy++) for (var dx=-RK; dx<=RK; dx++){
+    var r = Math.sqrt(dx*dx + dy*dy);
+    if (r > 0.5 && r <= RK){ var w = Math.exp(-Math.pow(r/RK - 0.5, 2) / (2 * 0.15 * 0.15)); tmp.push([dx, dy, w]); sum += w; } }
+  for (var i=0;i<tmp.length;i++) KOFF.push([tmp[i][0], tmp[i][1], tmp[i][2]/sum]);
+})();
+/* the cloud's per-cell hash values never change — compute them once
+   into tables instead of a Math.sin per sprite per frame (060) */
+var HJ_M = new Float64Array(LG*LG), HJ_H = new Float64Array(LG*LG), HJ_X = [], HJ_Y = [], HJ_Z = [];
+(function(){ var SJX = [0, 13, 31, 53], SJY = [0, 29, 47, 71], SVZ = [0, 7, 19, 37], s2, i2;
+  for (s2=0;s2<4;s2++){ HJ_X.push(new Float64Array(LG*LG)); HJ_Y.push(new Float64Array(LG*LG)); HJ_Z.push(new Float64Array(LG*LG)); }
+  for (i2=0;i2<LG*LG;i2++){ HJ_M[i2] = hashZ(i2); HJ_H[i2] = hashZ(i2*3+11);
+    for (s2=0;s2<4;s2++){ HJ_X[s2][i2] = hashZ(i2*7+SJX[s2]); HJ_Y[s2][i2] = hashZ(i2*7+SJY[s2]); HJ_Z[s2][i2] = hashZ(i2*5+SVZ[s2]); } }
+})();
+function pointInPoly(x, y, poly){
+  var inside = false;
+  for (var i=0, j=poly.length-1; i<poly.length; j=i++){
+    var xi = poly[i][0], yi = poly[i][1], xj = poly[j][0], yj = poly[j][1];
+    if (((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) inside = !inside;
+  }
+  return inside;
+}
+function seedLenia(g, H, noPre){
+  var poly = [];
+  for (var i=0;i<g.spokes.length;i++){ var q = g.spokes[i]; poly.push([Math.cos(q.a) * g.R * q.l, Math.sin(q.a) * g.R * q.l]); }
+  var A = new Float32Array(LG*LG), mask = new Uint8Array(LG*LG), cs = 2*H/LG;
+  for (var y=0;y<LG;y++) for (var x=0;x<LG;x++){
+    if (pointInPoly(-H + (x+0.5)*cs, -H + (y+0.5)*cs, poly)) mask[y*LG+x] = 1;
+  }
+  function splat(gx, gy, rad, peak){
+    var r0 = Math.ceil(rad);
+    for (var dy=-r0; dy<=r0; dy++) for (var dx=-r0; dx<=r0; dx++){
+      var xx = Math.round(gx)+dx, yy = Math.round(gy)+dy;
+      if (xx<0 || yy<0 || xx>=LG || yy>=LG) continue;
+      var v = peak * Math.exp(-(dx*dx + dy*dy) / (2 * (rad/2) * (rad/2)));
+      var idx = yy*LG+xx; if (mask[idx] && v > A[idx]) A[idx] = v;
+    }
+  }
+  splat(LG/2, LG/2, rrL(9, 15), rrL(0.8, 1.0));
+  var placed = 0, tries = 0;
+  while (placed < 26 && tries < 120){ tries++;
+    var ang = rrL(0, 6.2832), rad = g.webR * Math.sqrt(rngL()) * 0.9;
+    var px = Math.cos(ang)*rad, py = Math.sin(ang)*rad;
+    if (!pointInPoly(px, py, poly)) continue;
+    splat((px + H)/cs, (py + H)/cs, rrL(8, 15), rrL(0.7, 1.0)); placed++;
+  }
+  lenia = { g: g, H: H, A: A, mask: mask, U: new Float32Array(LG*LG), sint: new Float32Array(LG*LG), warm: false };
+  if (!noPre){ for (var pr0=0; pr0<60; pr0++) stepLenia(); } // pre-roll: the seed's opening crash happens offstage (noPre: the caller slices it across frames)
+}
+function stepLenia(){
+  if (!lenia) return;
+  var A = lenia.A, U = lenia.U, mask = lenia.mask;
+  for (var y=0;y<LG;y++) for (var x=0;x<LG;x++){
+    var idx = y*LG+x; if (!mask[idx]){ U[idx] = 0; continue; }
+    var u = 0;
+    if (x>=9 && x<LG-9 && y>=9 && y<LG-9){ // interior: no tap can leave the grid — skip the bounds checks (060; same sums, same order)
+      for (var k=0;k<KOFF.length;k++) u += A[(y+KOFF[k][1])*LG + (x+KOFF[k][0])] * KOFF[k][2];
+    } else {
+      for (var k=0;k<KOFF.length;k++){
+        var xx = x + KOFF[k][0], yy = y + KOFF[k][1];
+        if (xx<0 || yy<0 || xx>=LG || yy>=LG) continue;
+        u += A[yy*LG+xx] * KOFF[k][2];
+      }
+    }
+    U[idx] = u;
+  }
+  for (var i=0;i<LG*LG;i++){ if (!mask[i]) continue;
+    var gv = 2 * Math.exp(-Math.pow(U[i] - 0.32, 2) / (2 * 0.040 * 0.040)) - 1;
+    var v = A[i] + 0.12 * gv; A[i] = v < 0 ? 0 : (v > 1 ? 1 : v);
+  }
+}
+
+/* --- the SmoothLife Wash: a shimmer under the flesh --- */
+var SG = 120, smooth = null;
+var INOFF = [], OUTOFF = [];
+(function(){ for (var dy=-9; dy<=9; dy++) for (var dx=-9; dx<=9; dx++){
+  var r = Math.sqrt(dx*dx + dy*dy);
+  if (r <= 3) INOFF.push([dx, dy]); else if (r <= 9) OUTOFF.push([dx, dy]); } })();
+function seedSmooth(g, H, noPre){
+  var poly = [];
+  for (var i=0;i<g.spokes.length;i++){ var q = g.spokes[i]; poly.push([Math.cos(q.a) * g.R * q.l, Math.sin(q.a) * g.R * q.l]); }
+  var A = new Float32Array(SG*SG), mask = new Uint8Array(SG*SG), cs = 2*H/SG;
+  for (var y=0;y<SG;y++) for (var x=0;x<SG;x++){
+    if (pointInPoly(-H + (x+0.5)*cs, -H + (y+0.5)*cs, poly)) mask[y*SG+x] = 1;
+  }
+  // patchy noise seeding (disc seeding starved under test — see header note)
+  for (var i=0;i<SG*SG;i++){ if (mask[i]) A[i] = rngW() < 0.30 ? rrW(0.6, 1.0) : 0; }
+  smooth = { g: g, H: H, A: A, mask: mask, U: new Float32Array(SG*SG) };
+  // pre-roll: the wash needs ~100 steps to coalesce from noise into
+  // the broad shimmer (measured) — run them now so the shimmer is
+  // already working when the pass starts
+  if (!noPre){ for (var pr=0; pr<120; pr++) stepSmooth(); } // (noPre: the caller slices the pre-roll across frames)
+}
+function sg1(x, a, ea){ var t = -(x - a) / ea; if (t > 30) return 0; if (t < -30) return 1; return 1 / (1 + Math.exp(t)); }
+function stepSmooth(){
+  if (!smooth) return;
+  var A = smooth.A, U = smooth.U, mask = smooth.mask;
+  for (var y=0;y<SG;y++) for (var x=0;x<SG;x++){
+    var idx = y*SG+x; if (!mask[idx]){ U[idx] = 0; continue; }
+    var mi = 0, ni = 0, k, xx, yy;
+    if (x>=9 && x<SG-9 && y>=9 && y<SG-9){ // interior (060; same sums, same order)
+      for (k=0;k<INOFF.length;k++) mi += A[(y+INOFF[k][1])*SG + (x+INOFF[k][0])];
+      mi /= INOFF.length;
+      for (k=0;k<OUTOFF.length;k++) ni += A[(y+OUTOFF[k][1])*SG + (x+OUTOFF[k][0])];
+      ni /= OUTOFF.length;
+    } else {
+      for (k=0;k<INOFF.length;k++){ xx = x + INOFF[k][0]; yy = y + INOFF[k][1]; if (xx<0 || yy<0 || xx>=SG || yy>=SG) continue; mi += A[yy*SG+xx]; }
+      mi /= INOFF.length;
+      for (k=0;k<OUTOFF.length;k++){ xx = x + OUTOFF[k][0]; yy = y + OUTOFF[k][1]; if (xx<0 || yy<0 || xx>=SG || yy>=SG) continue; ni += A[yy*SG+xx]; }
+      ni /= OUTOFF.length;
+    }
+    var s5 = sg1(mi, 0.5, 0.147);
+    var b1 = 0.257 * (1 - s5) + 0.365 * s5;
+    var b2 = 0.336 * (1 - s5) + 0.549 * s5;
+    U[idx] = sg1(ni, b1, 0.028) * (1 - sg1(ni, b2, 0.028));
+  }
+  for (var i=0;i<SG*SG;i++){ if (!mask[i]) continue;
+    var v = A[i] + (U[i] - A[i]) * 0.35; A[i] = v < 0 ? 0 : (v > 1 ? 1 : v);
+  }
+}
+
+
+if (location.hash === '#counts'){
+  // 2x2 sheet: four deals at four dot-count ranges (066)
+  ctx.fillStyle = '#0d0708'; ctx.fillRect(0,0,W,H);
+  var ccells = [[180,180],[540,180],[180,540],[540,540]];
+  var ranges = [[5, 9, '5-8 dots'], [9, 20, '9-19 dots (current)'], [15, 22, '15-21 dots'], [22, 31, '22-30 dots']];
+  for (var k=0;k<4;k++){ huePhase = 0.38 + k*0.13; CNT_LO = ranges[k][0]; CNT_HI = ranges[k][1];
+    var gg = dealRadiolaria(118, 171); seedLenia(gg, 180); for (var st=0; st<220; st++) stepLenia(); seedSmooth(gg, 180); for (var st2=0; st2<140; st2++) stepSmooth(); cloudWarm = false;
+    drawVolume(gg, null, 1, ccells[k][0], ccells[k][1], 9000, 24000, 0.5 + k*0.9, k * 2.9, 9000);
+    ctx.fillStyle = '#e8e2d4'; ctx.font = '15px "DejaVu Sans Mono", monospace'; ctx.fillText(ranges[k][2], ccells[k][0] - 168, ccells[k][1] + 166);
+  }
+} else if (location.hash === '#grid'){
+  // 2x2 sheet: four consecutive deals from the stream
+  ctx.fillStyle = '#0d0708'; ctx.fillRect(0,0,W,H);
+  var cells = [[180,180],[540,180],[180,540],[540,540]];
+  for (var k=0;k<4;k++){ huePhase = 0.38 + k*0.13; var gg = dealRadiolaria(118, 171); seedLenia(gg, 180); for (var st=0; st<220; st++) stepLenia(); seedSmooth(gg, 180); for (var st2=0; st2<140; st2++) stepSmooth(); cloudWarm = false; ctx.drawImage(buildTessellation(gg, 360, 0.5 + k*0.9), cells[k][0] - 180, cells[k][1] - 180); drawVolume(gg, null, 1, cells[k][0], cells[k][1], 9000, 24000, 0.5 + k*0.9, k * 2.9, 9000); }
+} else {
+  var PASS_MS = 20000, passStart = -1, current = null, prevDeal = null, frameN = 0, colorTime = 0, lastNow = -1, firstNow = -1, nextDeal = null, nextLenia = null, nextSmooth = null, nextSteps = 0; // 20-second loop (Calvin)
+  function frame(now){
+    if (firstNow < 0) firstNow = now;
+    if (passStart < 0 || now - passStart >= PASS_MS){
+      prevDeal = current;
+      if (nextDeal){ current = nextDeal; lenia = nextLenia; smooth = nextSmooth; nextDeal = null; nextLenia = null; nextSmooth = null; } // prepared during the last pass — the swap is instant
+      else { current = dealRadiolaria(rr(195, 250), 335); seedLenia(current, 360); seedSmooth(current, 360); }
+      passStart = performance.now(); // fresh clock AFTER any seeding work — the shift starts at zero
+    }
+    huePhase += 0.00045;
+    var el = now - passStart;
+    var mku = Math.max(0, Math.min(1, el / 3500)), mk = mku * mku * (3 - 2 * mku); // the shift: 3.5s of gliding, then settled
+    if (lastNow < 0) lastNow = now;
+    if (mk >= 1) colorTime += Math.min(0.1, (now - lastNow) / 1000); // the colour clock runs while settled
+    lastNow = now;
+    ctx.fillStyle = '#0d0708'; ctx.fillRect(0,0,W,H);
+    frameN++;
+    if (lenia && (frameN % 2 === 0)){ stepLenia(); stepLenia(); } // growth at half pace — calmer churn in the dense cloud
+    if (smooth) stepSmooth(); // the shimmer lives
+    var beta = ((now - firstNow) / PASS_MS) * 3.14159; // continuous rotation — never resets at a trigger
+    if (tessDeal !== current){ tessCanvas = buildTessellation(current, W, beta); tessDeal = current; } // the room re-deals with the organism (076)
+    if (tessCanvas){ // the background breathes with the pass (079): quick fade in, quick fade out
+      var tA = 1;
+      if (el < 1200){ var tu = el / 1200; tA = tu * tu * (3 - 2 * tu); }
+      else if (el > PASS_MS - 1200){ var tv = (PASS_MS - el) / 1200; tA = tv * tv * (3 - 2 * tv); }
+      ctx.globalAlpha = tA; ctx.drawImage(tessCanvas, 0, 0); ctx.globalAlpha = 1;
+    }
+    drawVolume(current, prevDeal, mk, W/2, H/2, el, PASS_MS, beta, colorTime, now - firstNow);
+    // prepare the next deal in the background, a slice per frame, so
+    // the loop point itself costs nothing
+    if (!nextDeal && el > 4200 && el < PASS_MS - 500){
+      nextDeal = dealRadiolaria(rr(195, 250), 335);
+      var keepL = lenia; seedLenia(nextDeal, 360, true); nextLenia = lenia; lenia = keepL;
+      var keepS = smooth; seedSmooth(nextDeal, 360, true); nextSmooth = smooth; smooth = keepS;
+      nextSteps = 0;
+    } else if (nextDeal && nextSteps < 120){
+      if (nextSteps < 60){ var keepL2 = lenia; lenia = nextLenia; for (var pq2=0; pq2<3; pq2++) stepLenia(); lenia = keepL2; }
+      var keepS2 = smooth; smooth = nextSmooth; for (var pq3=0; pq3<3; pq3++) stepSmooth(); smooth = keepS2;
+      nextSteps += 3;
+    } // smaller slices (060): the same preparation, spread over more frames — done by ~el 5000, far ahead of the trigger
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>
